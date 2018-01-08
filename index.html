@@ -1,0 +1,81 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-1.12.4.js" type="text/javascript"></script>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+<p style="width:200px;height:100px;background:#4fa2fd;position:absolute;cursor: move;color:#fff;" class="p1">点击我拖动</p>
+
+<script>
+//    var el=$(".p1");
+//    var po=el.offset();//获取当前位置
+//    po.top+=100;
+//    el.offset(po)
+    $(function () {
+        $('.p1').mousedown(
+            function (event) {
+                var isMove = true;
+                var abs_x = event.pageX - $('.p1').offset().left;//鼠标按下当前位置
+                var abs_y = event.pageY - $('.p1').offset().top;
+                //计算body的宽度
+                var body_width = parseInt($('body').css('width'));
+                //计算容器的宽度
+                var modal_width = parseInt($('.p1').css('width'));
+                //计算body的高度
+                var body_height = parseInt($(window).height());
+                //计算容器的高度
+                var modal_height = parseInt($('.p1').css('height'));
+                //计算body与容器的宽度差
+                var differ_width = body_width - modal_width;
+                //计算body与容器的高度度差
+                var differ_height =  body_height - modal_height;
+                var xDirection = 1;
+                var yDirection = 1;
+                $(document).mousemove(function (event) {
+                            var leftx=event.pageX - abs_x;//鼠标的移动位置
+                            var lefty=event.pageY - abs_y;
+
+                            if (isMove) {
+                            var obj = $('.p1');
+                            if(leftx<0){
+                                leftx=0;
+                            }
+                            if(lefty<0){
+                                lefty=0;
+                            }
+                            if(leftx >= differ_width){
+                                leftx = differ_width;
+                            }
+                            if(lefty>= differ_height){
+                                lefty=differ_height;
+                            }
+                            obj.css({'left':leftx, 'top':lefty});//left
+                        }
+                    }
+                )
+                    .mouseup(function () {isMove = false;}
+                );
+            }
+        );
+    })
+    function  page(n) {  //将window封装为jquery对象
+        var w=$(widow)//得到页面大小
+        var pagesize=w.height()//得到当前滚动条位置
+        var current=w.scrollTop();//得到当前滚动条位置
+        w.scrollTop(current+n*pagesize);//设置新的滚动条位置
+        
+    }
+
+//
+
+
+</script>
+</body>
+</html>
